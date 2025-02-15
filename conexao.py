@@ -1,5 +1,6 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, sessionmaker
 from dotenv import load_dotenv
 import os
 
@@ -16,3 +17,16 @@ try:
     print("\n ---- conexão realizada com sucesso ---- \n")
 except Exception as e:
     print(f"\n !! Erro ao conectar: {e} !! \n")
+
+Base = declarative_base()
+
+class User(Base):
+
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    nome = Column(String)
+    email = Column(String)
+    age = Column(Integer)
+
+Base.metadata.create_all(engine)
